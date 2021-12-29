@@ -27,7 +27,6 @@ private:
 	bool isInteger(string text)
 	{
 		// Graphic separators and signs are admitted.
-
 		unsigned short length = text.length();
 
 		bool is_integer;
@@ -58,7 +57,6 @@ private:
 	string noWhitespaces(string text)
 	{
 		string no_whitespaces;
-
 		unsigned short length = text.length();
 		// Iterates text:
 		char c;
@@ -77,7 +75,6 @@ private:
 	int stringToInteger(string integer)
 	{
 		// Graphic separators are removed.
-
 		unsigned short length = integer.length();
 
 		string prepared;
@@ -120,7 +117,6 @@ public:
 	int readInteger()
 	{
 		string prompt = "Type " + title + " (integer value): ";
-
 		string read;
 		do
 		{

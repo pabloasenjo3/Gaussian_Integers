@@ -12,7 +12,6 @@ int Z_i::roundedQuotient(int dividend, int divisor)
 {
 	// 12 / 8 = 1
 	// 13 / 8 = 2
-
 	div_t division = div(dividend, divisor);
 	// dividend = divisor * division.quot + division.rem
 
