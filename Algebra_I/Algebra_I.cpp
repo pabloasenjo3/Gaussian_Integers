@@ -116,7 +116,7 @@ public:
 	// dividend = divisor * quotient + remainder
 
 	// divisor =/= 0	
-	// Let N(a + bi) = a^2 + b^2 : N(remainder) < N(divisor)
+	// Let N(a + bi) = a^2 + b^2 => N(remainder) < N(divisor)
 
 	// CONSTRUCTOR:
 
