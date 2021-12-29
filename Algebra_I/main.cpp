@@ -5,12 +5,10 @@ using namespace std;
 class Reader {
 private:
 	// FIELDS:
-
 	string title;
 	char graphic_separator; // As in 102'344'001.23
 
 	// READING METHODS:
-
 	string readLine(string prompt)
 	{
 		cout << prompt;
@@ -20,7 +18,6 @@ private:
 	}
 
 	// EVALUATORS:
-
 	bool isNotDigit(char c)
 	{
 		return c != graphic_separator && (c < '0' || c > '9');
@@ -58,7 +55,6 @@ private:
 	}
 
 	// MODIFIERS:
-
 	string noWhitespaces(string text)
 	{
 		string no_whitespaces;
@@ -99,7 +95,6 @@ private:
 
 public:
 	// CONSTRUCTORS:
-
 	Reader() :
 		title(""), graphic_separator('\'')
 	{
@@ -111,7 +106,6 @@ public:
 	}
 
 	// MODIFIERS:
-
 	void setTitle(string n_title)
 	{
 		title = n_title;
@@ -123,7 +117,6 @@ public:
 	}
 
 	// READING METHODS:
-
 	int readInteger()
 	{
 		string prompt = "Type " + title + " (integer value): ";

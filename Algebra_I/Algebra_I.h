@@ -10,9 +10,9 @@ namespace Algebra_I {
 		// FIELDS:
 		int a, b; // (a + bi)
 
-		int roundedQuotient(int dividend, int divisor);
+		int roundedQuotient(int, int);
 
-		string factor(int number);
+		string factor(int);
 
 	public:
 		// CONSTRUCTORS:
