@@ -6,6 +6,8 @@ using namespace std;
 
 Z_i::Z_i() {}
 
+Z_i::Z_i(int a) : a(a), b(0) {}
+
 Z_i::Z_i(int a, int b) : a(a), b(b) {}
 
 int Z_i::roundedQuotient(int dividend, int divisor)
@@ -36,35 +38,17 @@ string Z_i::factor(int number)
 	}
 }
 
-Z_i Z_i::plus(Z_i addend)
+// Calculates the GCD of two numbers (Great Common Divisor)
+
+Z_i Z_i::GCD(Z_i other)
 {
-	// (a + bi) + (c + di) = ( (a + c) + (b + d)i )
-	return Z_i(a + addend.a, b + addend.b);
+	return isZero() ? other : other.isZero() ? *this : other.GCD(*this % other);
 }
 
-Z_i Z_i::minus(Z_i subtrahend)
+//  Calculates the LCM of two numbers (Least Common Multiple)
+Z_i Z_i::LCM(Z_i other)
 {
-	// (a + bi) + (c + di) = ( (a - c) + (b - d)i )
-	return Z_i(a - subtrahend.a, b - subtrahend.b);
-}
-
-Z_i Z_i::times(Z_i factor)
-{
-	// (a + bi) * (c + di) = ( (ac - bd) + (ad + bc)i )
-	return Z_i(a * factor.a - b * factor.b, a * factor.b + b * factor.a);
-}
-
-Z_i Z_i::dividedBy(int divisor)
-{
-	// (a + bi) / n = ( a/n, (b/n)i )
-	return Z_i(roundedQuotient(a, divisor), roundedQuotient(b, divisor));
-}
-
-Z_i Z_i::conjugate()
-{
-	//  ______
-	// (a + bi) = (a - bi)
-	return Z_i(a, -b);
+	return (*this * other) / GCD(other);
 }
 
 unsigned int Z_i::getNorm()
@@ -76,6 +60,59 @@ bool Z_i::isZero()
 {
 	return !a && !b;
 }
+
+// Operators overloading for Z_i class
+
+Z_i Z_i::operator + (Z_i other)
+{
+	// (a + bi) + (c + di) = ( (a + c) + (b + d)i )
+	return Z_i(a + other.a, b + other.b);
+}
+
+Z_i Z_i::operator - (Z_i other)
+{
+	// (a + bi) + (c + di) = ( (a - c) + (b - d)i )
+	return Z_i(a - other.a, b - other.b);
+}
+
+Z_i Z_i::operator * (Z_i other)
+{
+	// (a + bi) * (c + di) = ( (ac - bd) + (ad + bc)i )
+	return Z_i(a * other.a - b * other.b, a * other.b + b * other.a);
+}
+
+Z_i Z_i::operator / (Z_i other)
+{
+	return (!other * *this) / other.getNorm();
+}
+
+Z_i Z_i::operator % (Z_i other)
+{
+	Z_i quotient = *this / other;
+	return *this - quotient * other;
+}
+
+Z_i Z_i::operator / (int other)
+{
+	// (a + bi) / n = ( a/n, (b/n)i )
+	return Z_i(roundedQuotient(a, other), roundedQuotient(b, other));
+}
+
+//	 Conjugate
+Z_i Z_i::operator ! ()
+{
+	//  ______
+	// (a + bi) = (a - bi)
+	return Z_i(a, -b);
+}
+
+Z_i Z_i::operator - ()
+{
+	return Z_i(-a, -b);
+}
+
+
+
 
 string Z_i::toString()
 {
@@ -108,9 +145,10 @@ Div_Z_i::Div_Z_i(Z_i dividend, Z_i divisor) : dividend(dividend), divisor(diviso
 	c + di         N(c + di)
 	*/
 
-	quotient = dividend.times(divisor.conjugate())
-		.dividedBy(divisor.getNorm());
-	remainder = dividend.minus(quotient.times(divisor));
+	//quotient = (dividend * !divisor) / divisor.getNorm();
+	//remainder = dividend - quotient * divisor;
+	quotient = dividend / divisor;
+	remainder = dividend % divisor;
 }
 
 string Div_Z_i::toString()

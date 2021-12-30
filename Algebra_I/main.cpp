@@ -175,6 +175,13 @@ int main()
 	Algebra_I::Div_Z_i division(dividend, divisor);
 
 	cout << division.toString() << endl;
+	
+	// GCD and LCM of dividend and divisor
+	cout << "GCD(" << dividend.toString() << ", " << divisor.toString() 
+		 << ") = " << dividend.GCD(divisor).toString() << endl;
+		 
+	cout << "LCM(" << dividend.toString() << ", " << divisor.toString() 
+		 << ") = " << dividend.LCM(divisor).toString() << endl;
 
 	return 0;
 }

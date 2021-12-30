@@ -17,22 +17,34 @@ namespace Algebra_I {
 	public:
 		// CONSTRUCTORS:
 		Z_i();
+		
+		Z_i(int);
 
 		Z_i(int, int);
-
-		Z_i plus(Z_i);
-
-		Z_i minus(Z_i);
-
-		Z_i times(Z_i);
-
-		Z_i dividedBy(int);
-
-		Z_i conjugate();
+		
+		Z_i GCD(Z_i);
+		
+		Z_i LCM(Z_i);
 
 		unsigned int getNorm();
 
 		bool isZero();
+		
+		Z_i operator + (Z_i);
+		
+		Z_i operator - (Z_i);
+		
+		Z_i operator * (Z_i);
+		
+		Z_i operator / (Z_i);
+		
+		Z_i operator % (Z_i);
+		
+		Z_i operator / (int);
+		
+		Z_i operator ! ();
+		
+		Z_i operator - ();
 
 		string toString();
 	};
