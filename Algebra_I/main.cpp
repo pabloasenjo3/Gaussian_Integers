@@ -62,7 +62,7 @@ private:
 	{
 		string no_whitespaces;
 		unsigned short length = text.length();
-		// Iterates text:
+		// Iterates over text:
 		char c;
 		for (unsigned short i = 0; i < length; i++)
 		{
@@ -82,7 +82,7 @@ private:
 		unsigned short length = integer.length();
 
 		string prepared;
-		// Iterates text:
+		// Iterates over text:
 		char c;
 		for (unsigned i = 0; i < length; i++)
 		{
@@ -97,11 +97,9 @@ private:
 public:
 	// CONSTRUCTORS:
 
-	Reader() :
-		title(""), digit_separator('\'') {}
+	Reader() : title(""), digit_separator('\'') {}
 
-	Reader(string title) :
-		title(title), digit_separator('\'') {}
+	Reader(string title) : title(title), digit_separator('\'') {}
 
 	// MODIFIERS:
 
@@ -180,10 +178,11 @@ int main()
 
 	cout << division.toString() << endl << endl;
 	
-	// GCD and LCM of dividend and divisor
+	// GCD of dividend and divisor
 	cout << "GCD(" << dividend.toString() << ", " << divisor.toString() 
 		 << ") = " << dividend.GCD(divisor).toString() << endl << endl;
-		 
+	
+	// LCM of dividend and divisor
 	cout << "LCM(" << dividend.toString() << ", " << divisor.toString() 
 		 << ") = " << dividend.LCM(divisor).toString() << endl;
 
