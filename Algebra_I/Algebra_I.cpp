@@ -12,7 +12,7 @@ Z_i::Z_i(int a, int b) : a(a), b(b) {}
 
 int Z_i::abs(int n)
 {
-	return (n > 0) ? n : -n;
+	return (n < 0) ? -n : n;
 }
  
 // Calculates the quotient that implies the lowest remainder in absolute value, preferring 
@@ -28,10 +28,10 @@ int Z_i::roundedQuotient(int dividend, int divisor)
 
 	int quot = dividend / divisor; // Truncated integer division
 	// Can't just check quotient's sign as it might be 0
-	int next_quot = quot + ((dividend * divisor > 0) ? -1 : 1); // The closest integer 
+	int next_quot = quot + ((dividend * divisor < 0) ? -1 : 1); // The closest integer 
 	// that is either too great or too low if division is negative
 	
-	return(abs(dividend - divisor * quot) <= abs(dividend - divisor * next_quot))
+	return (abs(dividend - divisor * quot) <= abs(dividend - divisor * next_quot))
 		? quot : next_quot;
 }
 
