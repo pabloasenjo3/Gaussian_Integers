@@ -10,6 +10,8 @@ namespace Algebra_I {
 
 		int a, b; // (a + bi)
 
+		int abs(int);
+
 		int roundedQuotient(int, int);
 
 		string factorToString(int);

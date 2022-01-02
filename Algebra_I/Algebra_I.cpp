@@ -10,16 +10,29 @@ Z_i::Z_i(int a) : a(a), b(0) {}
 
 Z_i::Z_i(int a, int b) : a(a), b(b) {}
 
+int Z_i::abs(int n)
+{
+	return (n > 0) ? n : -n;
+}
+ 
+// Calculates the quotient that implies the lowest remainder in absolute value, preferring 
+// positive remainders over negative ones
 int Z_i::roundedQuotient(int dividend, int divisor)
 {
-	// 1 / 2 = 0.5 -> 0
-	// 3 / 5 = 0.6 -> 1
-	int quotient = dividend / divisor; // Truncated integer division
-	int incremented = quotient + 1;
+	// -8 / +5 = -1.6 : roundedQuotient(-8, 5)  -> -2 
+		// -8 = 5 * -1 (- 3) = 5 * -2 (+ 2)
+		// |+2| <= |-3|
+	// -3 / -5 = -0.6 : roundedQuotient(-3, -5) -> -1
+	// 1 / 2 = 0.5    : roundedQuotient(1, 2)   -> +0
+	// 3 / 5 = 0.6    : roundedQuotient(3, 5)   -> +1
 
-	return (incremented * divisor - dividend < dividend - quotient * divisor)
-		? incremented
-		: quotient;
+	int quot = dividend / divisor; // Truncated integer division
+	// Can't just check quotient's sign as it might be 0
+	int next_quot = quot + ((dividend * divisor > 0) ? -1 : 1); // The closest integer 
+	// that is either too great or too low if division is negative
+	
+	return(abs(dividend - divisor * quot) <= abs(dividend - divisor * next_quot))
+		? quot : next_quot;
 }
 
 string Z_i::factorToString(int number)
@@ -77,18 +90,18 @@ Z_i Z_i::operator * (Z_i other)
 	return Z_i(a * other.a - b * other.b, a * other.b + b * other.a);
 }
 
+// Negative
+Z_i Z_i::operator - ()
+{
+	return Z_i(-a, -b);
+}
+
 // Conjugate
 Z_i Z_i::operator ! ()
 {
 	//  ______
 	// (a + bi) = (a - bi)
 	return Z_i(a, -b);
-}
-
-// Negative
-Z_i Z_i::operator - ()
-{
-	return Z_i(-a, -b);
 }
 
 // Returns a rounded division by an integer
@@ -116,17 +129,10 @@ string Z_i::toString()
 	string result;
 
 	if (a)
-	{
-		if (b) result = "(" + to_string(a) + " " + ((b > 0)
-			? "+ " + factorToString(b) :
-			"- " + factorToString(abs(b))) + "i)";
-		else result = (a > 0)
-			? to_string(a)
-			: "(" + to_string(a) + ")";
-	}
-	else if (b) result = (b > 0)
-		? factorToString(b) + "i"
-		: "(" + factorToString(b) + "i)";
+		if (b) result = "(" + to_string(a) + " " + 
+			((b > 0) ? "+ " + factorToString(b) : "- " + factorToString(abs(b))) + "i)";
+		else result = (a > 0) ? to_string(a) : "(" + to_string(a) + ")";
+	else if (b) result = (b > 0) ? factorToString(b) + "i" : "(" + factorToString(b) + "i)";
 	else result = "0";
 
 	return result;
@@ -137,7 +143,7 @@ string Z_i::toString()
 Div_Z_i::Div_Z_i(Z_i dividend, Z_i divisor) : dividend(dividend), divisor(divisor)
 {
 	// Calculates the least remainder division
-
+	
 	quotient = dividend / divisor;
 	remainder = dividend - quotient * divisor;
 	// remainder = dividend % divisor; 
