@@ -15,21 +15,23 @@ int Z_i::abs(int n)
 	return (n < 0) ? -n : n;
 }
  
-// Calculates the quotient that implies the lowest remainder in absolute value, preferring 
-// positive remainders over negative ones
+// Calculates the rounded quotient of an integer division
 int Z_i::roundedQuotient(int dividend, int divisor)
 {
-	// -8 / +5 = -1.6 : roundedQuotient(-8, 5)  -> -2 
-		// -8 = 5 * -1 (- 3) = 5 * -2 (+ 2)
-		// |+2| <= |-3|
-	// -3 / -5 = -0.6 : roundedQuotient(-3, -5) -> -1
-	// 1 / 2 = 0.5    : roundedQuotient(1, 2)   -> +0
-	// 3 / 5 = 0.6    : roundedQuotient(3, 5)   -> +1
+	// It works by finding the quotient that implies the lowest remainder in 
+	// absolute value, preferring positive remainders over negative ones:
+	
+	// -8 / 5 = -1.6  -> roundedQuotient(-8, 5)  = -2 
+		// -8 = 5 * (-1) [- 3] = 5 * (-2) [+ 2]
+		// abs(-3) >= abs(+2) --------^
+	// -3 / -5 = -0.6 -> roundedQuotient(-3, -5) = -1
+	// 1 / 2 = +0.5   -> roundedQuotient(1, 2)   = +0 (Positive remainder preferred)
+	// 3 / 5 = +0.6   -> roundedQuotient(3, 5)   = +1
 
-	int quot = dividend / divisor; // Truncated integer division
+	int quot = dividend / divisor; // Truncated quotient of integer division
 	// Can't just check quotient's sign as it might be 0
-	int next_quot = quot + ((dividend * divisor < 0) ? -1 : 1); // The closest integer 
-	// that is either too great or too low if division is negative
+	int next_quot = quot + ((dividend * divisor < 0) ? -1 : 1); 
+	// The closest integer that is either too great, or too low if division is negative
 	
 	return (abs(dividend - divisor * quot) <= abs(dividend - divisor * next_quot))
 		? quot : next_quot;
